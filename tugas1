@@ -1,0 +1,89 @@
+class Node:
+     
+    def __init__(self, data):
+         
+        self.data = data
+        self.next = None
+ 
+def reverse(head):
+ 
+    prev = None  
+    curr = head
+  
+    while (curr):
+        next = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next
+     
+    return prev
+  
+def reverseBetween(head, m, n):
+ 
+    if (m == n):
+        return head
+    revs = None
+    revs_prev = None
+    revend = None
+    revend_next = None
+  
+    i = 1
+    curr = head
+     
+    while (curr and i <= n):
+        if (i < m):
+            revs_prev = curr
+  
+        if (i == m):
+            revs = curr
+  
+        if (i == n):
+            revend = curr
+            revend_next = curr.next
+  
+        curr = curr.next
+        i += 1
+ 
+    revend.next = None
+    revend = reverse(revs)
+
+    if (revs_prev):
+        revs_prev.next = revend
+  
+
+    else:
+        head = revend
+  
+    revs.next = revend_next
+    return head
+ 
+def prints(head):
+ 
+    while (head != None):
+        print(head.data, end = ' ')
+        head = head.next
+         
+    print()
+ 
+def push(head_ref, new_data):
+ 
+    new_node = Node(new_data)
+    new_node.data = new_data
+    new_node.next = (head_ref)
+    (head_ref) = new_node
+    return head_ref
+ 
+if __name__=='__main__':
+     
+    head = None
+    head = push(head, 14)
+    head = push(head, 12)
+    head = push(head, 9)
+    head = push(head, 6)
+    head = push(head, 2)
+    head = push(head, 1)
+    reverseBetween(head, 2, 3 )
+    reverseBetween(head, 5, 6 )
+    
+    prints(head)
+     
